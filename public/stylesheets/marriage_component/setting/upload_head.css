@@ -1,0 +1,47 @@
+.head .img{
+	width: 120px;
+	height: 120px;
+	border: 1px solid #ededed;
+	float: left;
+}
+.head .img .img_container{
+	width: 105px;
+	height: 105px;
+	margin: 7.5px;
+	background-color: #ee1e6c;
+}
+.head .img .img_container img{
+	width: 105px;
+	height: 105px;
+}
+.head .upload{
+	line-height: 120px;
+	float: right;
+}
+#crop{
+	background-color: #FFF;
+	border: 1px solid #a6d7b1;
+	width: 100px;
+	height: 30px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+#crop:hover{
+	background-color: #a6d7b1;
+	color: #FFF;
+}
+#close{
+	background-color: #FFF;
+	color: #333;
+	border: 1px solid #a6d7b1;
+	width: 100px;
+	height: 30px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+#close:hover{
+	background-color: #a6d7b1;
+	color: #FFF;
+}

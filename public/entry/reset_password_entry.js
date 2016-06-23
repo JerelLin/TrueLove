@@ -1,0 +1,1 @@
+require("../javascripts/reset_password.jsx");

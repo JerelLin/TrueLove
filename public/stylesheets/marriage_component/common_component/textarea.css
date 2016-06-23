@@ -1,0 +1,15 @@
+.textarea_component{
+	width: 802px;
+	height: 215px;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border: 1px solid #e5e5e5;
+	color: #333;
+	font-size: 14px;
+	resize: none;
+}
+
+.textarea_component:focus{
+	box-shadow: 0 0 10px #e5e5e5;
+}

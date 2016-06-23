@@ -1,0 +1,117 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.edit_profile_header{
+	width: 100%;
+	height: 65px;
+	line-height: 65px;
+	border-bottom: 1px solid #ededed;
+}
+.edit_profile_header span{
+	margin-left: 35px;
+	font-size: 22px;
+	color: #333;
+}
+.edit_profile_main{
+	width: 852px;
+	min-height: 600px;
+	margin: 0 auto;
+}
+.edit_profile_main_list{
+	width: 100%;
+	min-height: 130px;
+	margin-top: 20px;
+	/*border: 1px solid #a6d7b1;*/
+}
+.edit_profile_main_list .title{
+	color: #666;
+	font-size: 16px;
+}
+.edit_profile_main_list .list_main{
+	min-width: 810px;
+	min-height: 70px;
+	margin: 20px auto;
+	/*border: 1px solid #a6d7b1;*/
+}
+.edit_profile_main_list .list_main .list_main_content{
+	width: 470px;
+	height: 100%;
+	margin-left: 50px;
+	margin-top: 20px;
+	/*border: 1px solid #a6d7b1;*/
+	overflow: hidden;
+}
+.edit_profile_main_list .list_main label{
+	font-size: 14px;
+	color: #292727;
+	line-height: 30px;
+	margin-top:5px;
+	float: left;
+}
+.edit_profile_main_list .list_main .input_component{
+	font-size:12px;
+	color: #666;
+	margin: 5px;
+	float: right;
+}
+
+/*头像*/
+.head .list_main{
+	border:none !important;
+}
+.head .list_main_content{
+	width: 350px !important;
+	margin-top: 0 !important;
+}
+
+/*名称*/
+
+
+/*简介*/
+.Introduction .list_main_content{
+	width: 555px !important;
+}
+.Introduction .textarea_component{
+	width:335px !important;
+	font-size:12px;
+	color:#666;
+	width: 360px;
+	height: 160px;
+	margin: 5px;
+	float: right;
+}
+
+/*联系人*/
+
+
+/*联系电话*/
+
+
+/*地址*/
+
+/*err message*/
+.edit_profile .checkedErr{
+	display:none;
+	background-image:url('../../../images/error.png');
+	background-repeat:no-repeat;
+	background-position:left;
+	margin-left:175px;
+	padding-left:20px;
+	color:#FE0202;
+	font-size:14px;
+}
+
+/*按钮区域*/
+.button_zone{
+	/*border: 1px solid #a6d7b1;*/
+}
+.button_zone .button_zone_mian{
+	width: 300px;
+	height: 50px;
+	margin-top: 40px;
+	line-height:50px;
+	float: right;
+	/*border: 1px solid #a6d7b1;*/
+}

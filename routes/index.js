@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var path=require("path");
 var fs=require('fs');
+var path=require("path");
 var request = require('superagent');
 var formidable = require('formidable');
-var AV = require('avoscloud-sdk');		//短信认证sdk
 
 var BASE_HOST = "192.168.1.115:8000/truelove/v1/agency_admin";
+
 /*
 *********************************************************************************
 *=>页面渲染
@@ -23,8 +23,11 @@ router.get('/mobile', function(req, res, next) {
   	res.render('mobile_index', { title: 'True Love' });
 });
 
-/* GET marriage_app. 判断token存在否？不存在则重定向到登录页面并提示“请登录！”*/
+/* GET marriage_app. */
 router.get('/marriage_app', function(req,res,next){
+	res.render('marriage_app', { title: 'True Love' });
+});
+router.get('/marriage_app/*', function(req,res,next){
 	res.render('marriage_app', { title: 'True Love' });
 });
 
@@ -46,140 +49,94 @@ router.get('/marriage_app', function(req,res,next){
 	密码错误 : { message: 1 }
 	登录成功 : { message: 2 }
 */
-router.route("/login")
-	.post(function(req, res, next){
-		function login(){
-			return new Promise((resolve, reject) => {
-				//192.168.1.111:8000/truelove/v1/agency_admin/merry_login
-				request.post(BASE_HOST+"/merry_login")
-					.set('Content-Type', 'application/x-www-form-urlencoded')
-					.send(req.body)
-					.end((error, res) => {
-						error ? reject(error) : resolve(res);
-					});
-			});
-		};
-		login().then((result) => {
-
-			var message="";
-			var error="";
-			var token="";
-			var auth=0;
-
-			var text=JSON.parse(result.text);
-			// console.log(text.message);
-			// console.log(text.token);
-
-			switch(parseInt(text.message)){				//parseInt(text.message)
-				case 0:
-					message="还未注册";
-					error="error";
-					break;
-				case 1:
-					message="密码错误";
-					error="error";
-					break;
-				case 2:
-					message="登录成功";
-					token=text.token || "";
-					auth=text.auth;
-					break;
-				default :
-					message="服务器出了点问题...";
-					error="error";
-					break;
-			};
-			console.log(token);
-			res.json({
-				message : message,
-				error : error,
-				token : token,
-				auth : auth
-			});
-		});		
-	});
+router.post("/login", function(req, res, next){
+	// function login(){
+	// 	return new Promise((resolve, reject) => {
+	// 		request.post(BASE_HOST + "/merry_login")
+	// 			.set('Content-Type', 'application/x-www-form-urlencoded')
+	// 			.send(req.body)
+	// 			.end((error, res) => {
+	// 				error ? reject(error) : resolve(res);
+	// 			});
+	// 	});
+	// };
+	// login().then((result) => {
+	// 	var return_data = {};
+	// 	var text=JSON.parse(result.text);
+	// 	switch(parseInt(text.message)){
+	// 		case 0:
+	// 			return_data = { message : "还未注册", error : true };
+	// 			break;
+	// 		case 1:
+	// 			return_data = { message : "密码错误", error : true };
+	// 			break;
+	// 		case 2:
+	// 			return_data = { message : "登录成功", error : false, token : text.token, auth : text.auth };
+	// 			break;
+	// 		default :
+	// 			return_data = { message : "亲~ 好像出了点问题呢？", error : true };
+	// 			break;
+	// 	};
+	// 	res.json(return_data);
+	// });
+	// var return_data = { message : "还未注册", error : true };
+	// var return_data = { message : "密码错误", error : true };
+	var return_data = { message : "登录成功", error : false, token : "love_token", auth : 0 };
+	// var return_data = { message : "亲~ 好像出了点问题呢？", error : true };
+	res.json(return_data);
+});
 
 /*register
-          手机号码已被注册 : { message: 0 }
-		  注册成功 : { message: 1 }
+    已被注册 : { message: 0 }
+	注册成功 : { message: 1 }
 */
-router.route("/register")
-	.post(function(req, res, next){
-		function register(){
-			return new Promise((resolve, reject) => {
-				//192.168.1.111:8000/truelove/v1/agency_admin/merry_register
-				request.post(BASE_HOST+"/merry_register")
-					.set('Content-Type', 'application/x-www-form-urlencoded')
-					.send(req.body)
-					.end((error, res) => {
-						error ? reject(error) : resolve(res);
-					});
-			});
-		};
-		register().then((result) => {
-
-			var message="";
-			var error="";
-			var token="";
-
-			var text=JSON.parse(result.text);
-
-			switch(parseInt(text.message)){
-				case 0:
-					message="手机号码已被注册";
-					error="error";
-					break;
-				case 1:
-					message="注册成功";
-					token=text.token || "";
-					break;
-				default :
-					message="服务器出了点问题...";
-					error="error";
-					break;
-			};
-			res.json({
-				message : message,
-				error : error,
-				token : token
-			});
-		});
-	});
+router.post("/register", function(req, res, next){
+	// function register(){
+	// 	return new Promise((resolve, reject) => {
+	// 		request.post(BASE_HOST+"/merry_register")
+	// 			.set('Content-Type', 'application/x-www-form-urlencoded')
+	// 			.send(req.body)
+	// 			.end((error, res) => {
+	// 				error ? reject(error) : resolve(res);
+	// 			});
+	// 	});
+	// };
+	// register().then((result) => {
+	// 	var return_data = {};
+	// 	var text = JSON.parse(result.text);
+	// 	switch(parseInt(text.message)){
+	// 		case 0:
+	// 			return_data = { message : "手机号码已被注册", error : true };
+	// 			break;
+	// 		case 1:
+	// 			return_data = { message : "注册成功", error : false, token : text.token, auth : 0 };
+	// 			break;
+	// 		default :
+	// 			return_data = { message : "亲~ 好像出了点问题呢？", error : true };
+	// 			break;
+	// 	};
+	// 	res.json(return_data);
+	// });
+	// var return_data = { message : "手机号码已被注册", error : true };
+	var return_data = { message : "注册成功", error : false, token : "love_token", auth : 0 };
+	// var return_data = { message : "亲~ 好像出了点问题呢？", error : true };
+	res.json(return_data);
+});
 
 /*reset_password*/
-router.route("/reset_password")
-	.post(function(req, res, next){
-		console.log(req.body);
-		res.json({ message : "密码修改成功!" });
-	});
+router.post("/reset_password", function(req, res, next){
+	console.log(req.body);
+	res.json({ message : "密码修改成功!" });
+});
 
 /*发送验证码*/
 router.get("/sendCheckedCode", function(req, res, next){
-	console.log(req.query);
-	AV.Cloud.requestSmsCode({
-		mobilePhoneNumber: '13531957084',
-		name: '初恋',
-		op: '短信验证',
-		ttl: 1
-	}).then(function(){
-		//发送成功
-		res.json({ message : "验证码已经成功发送至您的手机啦，请及时查看~" });
-	}, function(err){
-		//发送失败
-		res.json({ message : "验证码发送失败~" });
-	});
+	res.end("发送验证码");
 });
 
 /*检测验证码*/
 router.get("/CheckedCodeIsTure", function(req, res, next){
-	console.log(req.query);
-	AV.Cloud.verifySmsCode('6位数字验证码', '11 位手机号码').then(function(){
-   		//验证成功
-   		res.json({ checked : 1 });
-	}, function(err){
-   		//验证失败
-   		res.json({ checked : 0 });
-	});
+	res.end("检测验证码");
 });
 
 /*

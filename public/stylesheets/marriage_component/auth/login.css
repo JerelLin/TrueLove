@@ -1,0 +1,161 @@
+*{
+	margin:0;
+	padding:0;
+}
+@font-face {
+    font-family: "Source Han Sans CN";
+    src: url("../../../font/NotoSansHans-Thin-Windows.otf");
+}
+html,body{
+	width:100%;
+	height:100%;
+	font-family: "Source Han Sans CN";
+}
+#app{
+	width:100%;
+	height:100%;
+}
+.login{
+	width:100%;
+	height:100%;
+	background-image:url("../../../images/bg.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.login .login_main{
+	margin:0px auto;
+	width:400px;
+	position:relative;
+	top:50px;
+}
+
+.login .authErrMess{
+	display:none;
+	position:fixed;
+	top:0;
+	width:100%;
+	height:50px;
+	background-color:#f1f1f1;
+	color:#FC052D;
+	text-align:center;
+	line-height:50px;
+	font-size:16px;
+	font-family: "Source Han Sans CN";
+}
+
+/*logo区域*/
+.login .decoration{
+	width:400px;
+	height:160px;
+	text-align:center;
+}
+/* .login .decoration .logo{
+	margin:0 auto;
+	width:144px;
+	height:120px;
+	background-image:url('../images/icon.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+} */
+.login .decoration .appName{
+	width:100%;
+	height:90px;
+	line-height:90px;
+	font-size:40px;
+	color:#FFF;
+}
+.login .decoration .appSlogan{
+	width:100%;
+	height:40px;
+	font-size:18px;
+	color:#FFF;
+}
+
+/*表单区域*/
+.login .login_form{
+	width:400px;
+	height:360px;	/*400*/
+	border:1px solid #fff;
+	background-color:#f1f1f1;
+}
+.login .login_form .login_form_title{
+	width:100%;
+	height:80px;
+	font-size:20px;
+	line-height:80px;
+	text-align:center;
+	color:#666;
+	border-bottom:1px solid #bfbfbf;
+}
+
+.text_input{
+	width:360px;
+	height:40px;
+	padding:10px 20px;
+	border:none;
+	color:#333;
+	font-size:16px;
+	background-color:#f1f1f1;
+}
+
+.login .login_form .phone_number_wrap{
+	width:100%;
+	height:60px;
+	border-bottom:1px solid #bfbfbf;
+}
+.login .login_form .phone_number{
+	
+}
+
+.login .login_form .password_wrap{
+	width:100%;
+	height:60px;
+	border-bottom:1px solid #bfbfbf;
+}
+.login .login_form .password{}
+
+.login .login_form .submit_wrap{
+	margin-top:20px;
+	width:100%;
+	height:60px;
+	text-align:center;
+	line-height:60px;
+}
+.login .login_form .submit{
+	display:inline-block;
+	width:150px;
+	height:50px;
+	border:none;
+	color:#FFF;
+	background-color:#ffbb33;
+	font-size:14px;
+}
+.login .login_form .submit:hover{
+	background-color:#FF5902;
+}                                               
+
+.login .login_form .redirect_zone{
+	width:100%;
+	height:60px;
+	line-height:60px;
+}
+.login .login_form .free_register{
+	text-decoration:none;
+	float:left;
+	color:#333;
+	font-size:14px;
+	margin-left: 15px;
+}
+.login .login_form .free_register:hover{
+	text-decoration:underline;
+}
+.login .login_form .find_password{
+	text-decoration:none;
+	float:right;
+	color:#333;
+	font-size:14px;
+	margin-right: 15px;
+}
+.login .login_form .find_password:hover{
+	text-decoration:underline;
+}

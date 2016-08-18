@@ -1,0 +1,28 @@
+.login .login_form{
+	height:325px;
+}                         
+.login .login_form .redirect_zone{
+	width:100%;
+	height:60px;
+	line-height:60px;
+}
+.login .login_form .free_register{
+	text-decoration:none;
+	float:left;
+	color:#2db7f5;
+	font-size:12px;
+	margin-left: 15px;
+}
+.login .login_form .free_register:hover{
+	text-decoration:underline;
+}
+.login .login_form .find_password{
+	text-decoration:none;
+	float:right;
+	color:#2db7f5;
+	font-size:12px;
+	margin-right: 15px;
+}
+.login .login_form .find_password:hover{
+	text-decoration:underline;
+}

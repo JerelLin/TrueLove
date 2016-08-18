@@ -1,0 +1,72 @@
+.activity_comment .activity_comment_main{
+	width:100%;
+}
+.activity_comment .activity_comment_list{
+	width:99%;
+	min-height:150px;
+	border:1px solid #ededed;
+	margin-top: 15px;
+	-webkit-transition: box-shadow .5s;
+	-moz-transition: box-shadow .5s;
+	transition: box-shadow .5s;
+}
+.activity_comment .activity_comment_list:hover{
+	box-shadow: 5px 5px 5px #ededed;
+}
+.activity_comment .activity_comment_list .user_information{
+	margin:0 auto;
+	width:650px;
+	height:100px;
+}
+.activity_comment .activity_comment_list .user_information img{
+	width:50px;
+	border-radius: 5px;
+	margin-top:30px;
+}
+.activity_comment .activity_comment_list .user_information span{
+	padding: 0 20px;
+	position: relative;
+	bottom: 20px;
+	font-size: 12px;
+}
+.activity_comment .activity_comment_list .comment_content{
+	width:650px;
+	margin:5px auto;
+	overflow: hidden;
+}
+.activity_comment .activity_comment_list .comment_content span{
+	line-height: 25px;
+	float:left;
+}
+.activity_comment .activity_comment_list .comment_content p{
+	float:right;
+	width:600px;
+	line-height: 25px;
+}
+.activity_comment .activity_comment_list .comment_photos{
+	margin-left: 146px;
+	width:462px;
+}
+.activity_comment .activity_comment_list .comment_photos img{
+	display:inline-block;
+	width:100px;
+	margin-right:4px;
+	margin-bottom:-2px;
+}
+.activity_comment .activity_comment_list .comment_date{
+	padding: 20px 20px;
+	text-align: right;
+}
+.comment_empty{
+	text-align: center;
+	line-height: 20px;
+}
+.comment_pagination{
+	height: 80px;
+	margin-top:30px;
+	padding: 10px 8px;
+	overflow: hidden;
+}
+.comment_pagination .ant-pagination{
+	float: right;
+}

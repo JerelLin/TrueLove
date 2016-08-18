@@ -1,99 +1,94 @@
 import React from "react";
-import { IndexLink,Link } from "react-router";
-import request from "superagent"; 
+import { IndexLink, Link } from "react-router";
+import { Icon, Tabs, Spin } from "antd";
+import { fetch_data_get } from "../../../../mini_function/fetch.js";
+import Subject from "../layout_component/subject.jsx";
+import Comment from "./comment.jsx";
+
 import "../../../stylesheets/marriage_component/activity/activity_detail.css";
+
+const TabPane = Tabs.TabPane;
 
 class Activity_detail extends React.Component{
 
-	constructor(props){
-		super(props);
-		window.scrollTo(0,0);
-		var activity_detail_data={
-			activity_img_show : "../../../images/../../../images/1462587959000.jpg",
-			activity_name : "遭遇触动!",
-			activity_deadline : "2016-03-06 12:30",
-			activity_date : "2016-03-08",
-			commentSum : 30,
-			signSum : 120,
-
-			timestamp : null 				/*时间戳*/
-		};
-		this.state={
-			activity_detail_data : activity_detail_data
+	constructor( props ){
+		super( props );
+		window.scrollTo(0, 0);
+		this.state = {
+			activity_detail_loading : false,
+			comment_page : 1,
+			activity_detail : {
+				activity_cover : "", 
+				activity_name : "", 
+				activity_deadline : "", 
+				activity_start : "",
+				comment_total : 0,
+				activity_comment : [{ user_head : "", user_name : "", user_sex : "", comment_content : "", comment_date : "", comment_photos : [  ] }]
+			}
 		};
 	}
 
 	componentDidMount(){
-	      	var _this=this;
-	      	var { timestamp } = this.props.params;
-	      	this.setState({ timestamp : this.props.params.activity_id });
-	      	console.log(this.props.params);
-		if(timestamp){
-			this.setState({ timestamp : timestamp });
-			console.log("时间戳为:  " + timestamp + "  =>将会根据此时间戳获取到相应的活动详情数据");
-			request.get("/getActivityDetail")
-				.accept('application/json')		/*接收什么类型的数据*/
-				.query({
-					timestamp : timestamp
-				})
-				.end(function(err,res){
-					if(err || !res.ok){
-						console.log(err);
-						console.log(res);
-						return false;
-					};
-					console.log("已经初始化时间戳为 "+timestamp+" 的活动");
-				});
-		}
+		let _this = this;
+		let { query } = this.props.location;
+		let activity_id = query.activity_id;
+		_this.setState({ activity_detail_loading : true });
+		fetch_data_get("/marriage_api/get_activity_detail", { token : localStorage.marriage_app_token, activity_id : activity_id })
+			.then((result) => {
+				_this.setState({ activity_detail_loading : false, activity_detail : result.body.activity_detail });
+			})
+			.catch((error) => { console.log(error) });
+	}
+
+	// 切换选项卡时触发此函数
+	callback( key ){
+		console.log(key);
+	}
+
+	// 评论区域分页
+	renew_comment( page ){
+		console.log( page );
+		this.setState({ comment_page : page });
 	}
 
 	render(){
 		return(
 			<div className="activity_detail">
-				<div className="activity_detail_header"><span>活动详情</span></div>
+				<Subject subject_content = "活动详情" />
 				<div className="activity_detail_main">
-				{/*返回活动管理*/}
-					<div className="back_to_activity_management">
-						<Link to="/marriage_app/Activity_management"><span>活动总览</span></Link>
+
+					<div className="back">
+						<Link to="/marriage_app/activity_management"><Icon type="left" /><span>返回</span></Link>
 					</div>
-				{/*活动信息*/}
-					<div className="activity_information">
-						<div className="activity_img_show"><img src={ this.state.activity_detail_data.activity_img_show }/></div>
-						<div className="activity">
-							<div className="activity_name">
-								<span className="label">活动名称:</span>
-								<span className="label_value">{ this.state.activity_detail_data.activity_name }</span>
-							</div>
-							<div className="activity_deadline">
-								<span className="label">报名截止:</span>
-								<span className="label_value">{ this.state.activity_detail_data.activity_deadline }</span>
-							</div>
-							<div className="activity_date">
-								<span className="label">活动时间:</span>
-								<span className="label_value">{ this.state.activity_detail_data.activity_date }</span>
-							</div>
-						</div>
-					</div>
-				{/*活动评价*/}
-					<div className="activity_comment">
-						<div className="activity_comment_header">
-							<IndexLink to={`/marriage_app/Activity_management/Activity_detail/${ this.state.timestamp }`}  activeClassName={ "active" } className="activity_comment_nav">
-								<div className="header_item">
-									<span className="label">评论</span>
-									<span className="comment_data">{ this.state.activity_detail_data.commentSum }</span>
+					<Spin size="large" spinning={ this.state.activity_detail_loading } >
+						<div className="activity_information">
+							<div className="activity_cover"><img src={ this.state.activity_detail.activity_cover }/></div>
+							<div className="activity_about">
+								<div className="activity_name">
+									<span className="label">活动名称 :</span>
+									<span className="label_value">{ this.state.activity_detail.activity_name }</span>
 								</div>
-							</IndexLink>
-							<Link to={`/marriage_app/Activity_management/Activity_detail/${ this.state.timestamp }/Sign`} activeClassName={ "active" } className="activity_comment_nav">
-								<div className="header_item">
-									<span className="label">报名</span>
-									<span className="comment_data">{ this.state.activity_detail_data.signSum }</span>
+								<div className="activity_deadline">
+									<span className="label">报名截止 :</span>
+									<span className="label_value">{ this.state.activity_detail.activity_deadline }</span>
 								</div>
-							</Link>
+								<div className="activity_start">
+									<span className="label">活动时间 :</span>
+									<span className="label_value">{ this.state.activity_detail.activity_start }</span>
+								</div>
+							</div>
 						</div>
-						<div className="comment_or_sign">
-							{ this.props.children }
+
+						<div className="activity_influence">
+							<Tabs defaultActiveKey="1" onChange={ ( key ) => this.callback( key ) }>
+								<TabPane tab="评论" key="1">
+									<Comment activity_comment = { this.state.activity_detail.activity_comment } renew_comment = { ( page ) => this.renew_comment( page ) } comment_page = { this.state.comment_page } comment_total = { this.state.activity_detail.comment_total } />
+								</TabPane>
+								<TabPane tab="报名" key="2">报名</TabPane>
+							</Tabs>
 						</div>
-					</div>
+					</Spin>
+
 				</div>
 			</div>
 		);

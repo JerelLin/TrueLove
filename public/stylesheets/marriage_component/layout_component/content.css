@@ -1,0 +1,13 @@
+.content_box{
+	width: 1178px;
+	margin: 20px auto;
+	overflow: hidden;
+}
+.content_main{
+	position:relative;
+	float: right;
+	width: 955px;
+	min-height: 800px !important;
+	background-color: #FFF;
+	border: 1px solid #ededed;
+}

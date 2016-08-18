@@ -1,0 +1,32 @@
+.checking .decoration{
+	margin: 0 auto;
+}
+.checking{
+	width:100%;
+	height:100%;
+}
+.checking .checking_main{
+	margin:0px auto;
+	width:600px;
+	position:relative;
+	top:50px;
+} 
+.checking .checking_form{
+	margin: 100px auto;
+	width:100%;
+	height:150px;
+	border:1px solid #fff;
+	background-color:#f1f1f1;
+	position:relative;
+}
+.checking .checking_form p{
+	margin: 50px auto;
+	height: 40px;
+	text-align:center;
+	line-height:40px;
+}
+.checking .checking_form .logout{
+	position: absolute;
+	bottom: 10px;
+	right: 20px;
+}

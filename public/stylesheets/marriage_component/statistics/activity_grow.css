@@ -1,110 +1,60 @@
-.activity_flow_title{
-	color:#434343;
+.activity_flow .label{
+	padding: 20px 0;
 }
-/* 日期下拉样式补充*/
-.activity_flow .date_option{
-	width:100%;
-	height:80px;
-	/*border:1px solid #b6b6b6;*/
+.activity_flow .activity_lsit{
+	
 }
-.activity_flow .date_option label{
-	color:#434343;
-	font-size:15px;
-	margin-right:25px;
+.activity_flow .activity_item{
+	width: 99%;
+	height: 225px;
+	border: 1px solid #ededed;
 	margin-top:20px;
+	overflow: hidden;
+	-webkit-transition: box-shadow .5s;
+	-moz-transition: box-shadow .5s;
+	transition: box-shadow .5s;
 }
-.activity_flow .date_option .select{
-	display:inline-block;
-	margin-top:20px;
+.activity_flow .activity_item:hover{
+	box-shadow: 5px 5px 5px #ededed;
 }
-/* 日期下拉样式补充-end*/
-.activity_flow .note{
-	display:inline-block;
-	font-size:14px;
-	color:#5a5a5a;
-	float: right;
-	margin-right:20px;
-	margin-top:30px;
-}
-/*活动统计*/
-.activity_flow .activities_item{
-	width:100%;
-	height:185px;
-	margin-top:5px;
-	margin-bottom:20px;
-	border:1px solid #e0e0e0;
-}
-	/*左边图片和标题部分*/
-.activity_flow .activities_item_title_and_img{
-	width:40%;
-	height:100%;
+.activity_flow .activity_item_left{
+	width: 60%;
+	height: 100%;
 	float: left;
+	overflow: hidden;
 }
-.activity_flow .activities_item_img{
-	width:50%;
-	height:100%;
-	float:left;
+.activity_flow .activity_item_left img{
+	height: 80%;
+	margin: 10% 20px;
 }
-.activity_flow .activities_item_img img{
-	width:140px;
-	height:140px;
-	margin-top:22px;
-	margin-left: 15px;
+.activity_flow .activity_item_right{
+	width: 40%;
+	height: 100%;
+	float: right;
 }
-.activity_flow .activities_item_title{
-	width:50%;
-	height:100%;
-	float:right;
-	line-height:100%;
-}
-.activity_flow .activities_item_title h2{
-	font-size:22px;
-	color:#434343;
-	margin-top: 20px;
-	margin-left:10px;
-}
-	/*左边图片和标题部分-end*/
-
-	/*右边统计数值部分*/
-.activity_flow .activities_item_flow{
-	width:35%;
-	height:100%;
-	float:left;
+.activity_flow .activity_item_right .activity_name{
+	width: 100%;
+	height: 20%;
+	margin-top:20%;
 }
 .activity_flow .flow_stats{
-	width:100%;
-	height:100%;
+	width: 60%;
+	height: 50%;
+	float: left;
 }
-.activity_flow .flow_stats_left{
-	width:45%;
-	height:100%;
-	float:left;
-	margin-right: 10%;
+.activity_flow .flow_stats span{
+	padding-right: 30px;
 }
-.activity_flow .flow_stats_right{
-	width:45%;
-	height:100%;
-	float:right;
+.activity_pagination{
+	width: 100%;
+	height: 50px;
+	margin-top: 20px;
+	overflow: hidden;
 }
-.activity_flow .flow_stats_left div{
-	width:100%;
-	height:20px;
-	margin-top:15px;
+.activity_pagination .ant-pagination{
+	float: right;
 }
-.activity_flow .flow_stats_right div{
-	width:100%;
-	height:20px;
-	margin-top:15px;
+.activity_empty{
+	text-align: center;
+	margin: 20px auto;
 }
-.activity_flow .flow_stats div label{
-	font-size:14px;
-	color:#666;
-	float:left;
-}
-.activity_flow .flow_stats div span{
-	color:#434343;
-	font-size:14px;
-	float:right;
-}
-	/*右边统计数值部分-end*/
-/*活动统计-end'*/

@@ -1,9 +1,5 @@
 import React from "react";
-
-import request from "superagent"; 
-/*尽管我十分不愿意用jquery，但为了保险起见，在表单提交这一块还是用jquery的ajax吧，关于formdata，好多实现都是基于ajax的*/
-import $ from "../../module/jquery.min.js";
-
+import { Subject } from "../layout_component/subject.jsx";
 import Input from "../common_component/input.jsx";
 import Textarea from "../common_component/textarea.jsx";
 import Editor from "../common_component/editor.jsx";
@@ -328,8 +324,7 @@ class Activity extends React.Component{
 					</div>
 					<div className="errMess">{ this.state.errMess }</div>
 				</Modal>
-
-				<div className="activity_publish_header"><span>发布相亲活动</span></div>
+				<Subject subject_content = "发布相亲活动" />
 				<form encType="multipart/form-data" className="activity_publish_main" action="#" method="post" ref="publishFrom">
 					{/*标题*/}
 					<div className="activity_publish_title">

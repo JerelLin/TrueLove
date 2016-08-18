@@ -1,0 +1,38 @@
+.nav{
+	float: left;
+	width: 220px;
+	height: 500px;
+	background-color: #FFF;
+	box-sizing: border-box;
+	border: 1px solid #ededed;
+	border-right: none;
+}
+.nav_title{
+	width: 30%;
+	height: 40px;
+	color: #707171;
+	text-align: center;
+	line-height: 40px;
+	font-size: 14px;
+}
+.nav li{
+	list-style-type: none;
+}
+.nav li a{
+	display: inline-block;
+	width: 100%;
+	height: 40px;
+	text-decoration: none;
+	text-align: center;
+	line-height: 40px;
+	color: #707171;
+	font-size: 14px;
+}
+.nav li a:hover{
+	color: #FFF !important;
+	background-color: #2db7f5;
+}
+.nav li .active{
+	color: #FFF !important;
+	background-color: #2db7f5;
+}

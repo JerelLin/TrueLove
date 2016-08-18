@@ -1,7 +1,6 @@
 import React from "react";
 import Select from "../common_component/select.jsx";
 import ButtonControl from "../common_component/buttonControl.jsx";
-import { BarChart } from "react-d3-components";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "Recharts";
 import request from "superagent";
 import "../../../stylesheets/marriage_component/statistics/activity_property.css";

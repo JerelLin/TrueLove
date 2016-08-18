@@ -1,0 +1,94 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.header{
+	width: 100%;
+	height: 88px;
+	color: #FFF;
+	background-color: #333;
+	border-bottom: 1px solid #FFF;
+}
+.header_main{
+	width: 1248px;
+	height: 100%;
+	margin: 0 auto;
+}
+.header_main_left{
+	width: 340px;
+	height: 100%;
+	float: left;
+}
+.header .logo{
+	width: 150px;
+	height: 100%;
+	line-height: 88px;
+	float: left;
+	background-image: url("../../../images/icon.png");
+	background-repeat: no-repeat;
+	background-position: left;
+}
+.header .logo span{
+	display: inline-block;
+	margin-left: 68px;
+	font-size: 35px;
+	color:#FFF;
+	text-decoration:none;
+}
+.header .subject{
+	width: 180px;
+	height: 100%;
+	float: right;
+	text-align: center;
+	line-height: 88px;
+	font-size: 18px;
+}
+.header .header_main_right{
+	width: 290px;
+	height: 100%;
+	float: right;
+}
+.header .user{
+	width: 225px;
+	height: 100%;
+	float: left;
+}
+.header .user_img{
+	display: inline-block;
+	margin: 9px auto; 
+	width: 70px;
+	height: 70px;
+	border-radius: 100px;
+	background-color:  #ededed;
+	float: left;
+	overflow:hidden;
+}
+.header .user_img img{
+	width:100%;
+	height:100%;
+}
+.header .user_name{
+	display: inline-block;
+	padding-top:30px;
+	width: 150px;
+	height: 58px;
+	color: #FFF;
+	font-size: 14px;
+	text-align: center;
+	float: right;
+}
+.header .logout{
+	width: 65px;
+	height: 100%;
+	float: right;
+}
+.header .logout span{
+	display: inline-block;
+	padding-top:30px;
+	width: 100%;
+	height: 58px;
+	color: #FFF;
+	font-size: 14px;
+	text-align: center;
+	cursor: pointer;
+}

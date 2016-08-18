@@ -1,138 +1,132 @@
 import React from "react";
 import { Link } from "react-router";
-import request from "superagent"; 
-import Pager from "../common_component/pager.jsx";
+import { notification, Spin, Pagination } from "antd";
+import Subject from "../layout_component/subject.jsx";
+import { fetch_data_get } from "../../../../mini_function/fetch.js";
+
 import "../../../stylesheets/marriage_component/activity/activity_management.css";
 
 class Activity_management extends React.Component{
 
-	constructor(props){
-		super(props);
-		window.scrollTo(0,0);
-		var activity_data_list=[
-			{
-				img : "../../../images/xiaode.jpg",
-				title : "寻找最美的她—大型相亲活动",
-				brief : "想知道你的TA在哪里吗？通过这个活动你就能找到你心爱的那个TA哦想知道你的TA在哪里吗？通过这个活动你就能找到你心爱的那个TA哦",
-				read : 168,
-				sign_up : 32,
-				comment : 64,
-				timestamp : 1459782264000
-			},
-			{
-				img : "../../../images/xiaode.jpg",
-				title : "寻找最美的她—大型相亲活动",
-				brief : "想知道你的TA在哪里吗？通过这个活动你就能找到你心爱的那个TA哦",
-				read : 168,
-				sign_up : 32,
-				comment : 64,
-				timestamp : 1459782264000
-			},
-			{
-				img : "../../../images/xiaode.jpg",
-				title : "寻找最美的她—大型相亲活动",
-				brief : "想知道你的TA在哪里吗？通过这个活动你就能找到你心爱的那个TA哦",
-				read : 168,
-				sign_up : 32,
-				comment : 64,
-				timestamp : 1459782264000
-			}
-		];
-		var pages=10;
-		this.state={
-			activity_data_list : activity_data_list,
-			pages : pages
+	constructor( props ){
+		super( props );
+		window.scrollTo(0, 0);
+		this.state = {
+			activity_list_loading : false,
+			activity_detail_loading : false,
+			preview_visible : false,
+			page_number : 1,
+			activity_list_total : 0,
+			activity_list_data : [{
+				activity_statistics : { read : "", sign_up : "", comment : "" },
+				activity_cover : "",
+				activity_subject : "",
+				activity_content : "",
+				activity_date : "",
+				activity_id : ""
+			}],
+			activity_detail : ""
 		};
 	}
 
 	componentDidMount(){
-	      	request.get("/initActivity")
-	      		.accept('application/json')		/*接收什么类型的数据*/
-	      		.end(function(err,res){
-	      			if(err || !res.ok){
-					console.log(err);
-					console.log(res);
-					return false;
-				};
-				console.log("活动列表初始化");
-	      		});
-	}
-
-	/*删除活动*/
-	handle_delete(timestamp){
-		request.post("/deleteActivity")
-			.send({
-				timestamp : timestamp
+	    let _this = this;
+		_this.setState({ activity_list_loading : true });
+		_this.init_activity( 1 )
+			.then((result) => {
+				_this.setState({
+					activity_list_loading : false,
+					activity_list_total : result.body.activity_list_total,
+					activity_list_data : result.body.activity_list_data
+				});
+				console.log(result.body.activity_list_data);
 			})
-			.end(function(err,res){
-				if(err || !res.ok){
-					console.log(err);
-					console.log(res);
-					return false;
-				};
-				console.log("已经删除时间戳为 "+timestamp+" 的活动");
-			});
+			.catch((error) => { console.log(error) });
 	}
 
-	queryByPage(page){
-		request.get("/getPageActivity")
-	      		.accept('application/json')
-	      		.query({ page : page })
-	      		.end(function(err,res){
-	      			if(err || !res.ok){
-					console.log(err);
-					return false;
-				};
-				console.log("获取第"+page+"页活动");
-	      		});
+	// 根据activity_id删除指定活动 根据page_number返回当前页数更新后的活动数据
+	activity_delete( activity_id ){
+		let _this = this;
+		fetch_data_get("/marriage_api/delete_activity", { token : localStorage.marriage_app_token, activity_id : activity_id, page_number : this.state.page_number })
+			.then((result) => {
+				notification["success"]({
+			      	message: "消息",
+			      	description: result.body.message
+			    });
+				_this.setState({
+					activity_list_total : result.body.activity_list_total,
+					activity_list_data : result.body.activity_list_data
+				});
+			})
+			.catch((error) => { console.log(error) });
+	}
+
+	// 记录当前页数 更新当前页数活动数据
+	onChange( page ){
+		window.scrollTo(0, 0);
+		let _this = this;
+		this.setState({ activity_list_loading : true, page_number : page });
+		_this.init_activity( page )
+			.then((result) => {
+				_this.setState({
+					activity_list_loading : false,
+					activity_list_total : result.body.activity_list_total,
+					activity_list_data : result.body.activity_list_data
+				});
+				console.log( page );
+				console.log( result.body.activity_list_data );
+			})
+			.catch((error) => { console.log(error) });
+	}
+
+	// 获取指定页数活动数据
+	init_activity( page_number ){
+		return new Promise((resolve, reject) => {
+			fetch_data_get("/marriage_api/init_activity", { token : localStorage.marriage_app_token, page_number : page_number })
+				.then((result) => {
+					resolve(result)
+				})
+				.catch((error) => { reject(error) });
+		});
 	}
 
 	render(){
 		return(
 			<div className="activity_management">
-				<div className="activity_management_header"><span>相亲活动管理</span></div>
+				<Subject subject_content = "相亲活动管理" />
 				<div className="activity_management_main">
-					{
-						this.state.activity_data_list	?	
+					<Spin size="large" spinning={ this.state.activity_list_loading } >
+						{
+							(this.state.activity_list_data).length != 0	?	
 
-							this.state.activity_data_list.map( (element,index) => {
-								return(
-									<div key={ index } className="activity_list">
-										<div className="activity_img_and_title_and_brief">
-											<div className="activity_img"><img src={ element.img }/></div>
-											<div className="activity_title_and_brief">
-												<Link to={ `/marriage_app/Activity_management/Activity_detail/${ element.timestamp }` } >
-													<div className="activity_title">{ element.title }</div>
-												</Link>
-												<div className="activity_brief">{ element.brief }</div>
-											</div>
-										</div>
-										<div className="activity_statistics">
-											{/*删除*/}
-											<input type="button" ref="delete_btn" className="delete_btn" value="删除" onClick={ () => { this.handle_delete(element.timestamp) } }/>
-
-											{/*统计数据*/}
-											<div className="activity_statistics_detail">
-												<div className="activity_statistics_item read">
-													<span className="label">阅读</span>
-													<span className="activity_statistics_data">{ element.read }</span>
+								this.state.activity_list_data.map( (element, index) => {
+									return(
+										<div key={ index } className="activity_data">
+											<div className="activity_left"><img src={ element.activity_cover } /></div>
+											<div className="activity_right">
+												<div className="activity_text">
+													<div className="activity_subject">{ element.activity_subject }</div>
+													<div className="activity_content">{ element.activity_content }</div>
 												</div>
-												<div className="activity_statistics_item sign_up">
-													<span className="label">报名</span>
-													<span className="activity_statistics_data">{ element.sign_up }</span>
-												</div>
-												<div className="activity_statistics_item comment">
-													<span className="label">评论</span>
-													<span className="activity_statistics_data">{ element.comment }</span>
+												<div className="activity_action">
+													<span className="activity_delete" onClick = { (  ) => this.activity_delete( element.activity_id ) }><a href="#">删除</a></span>
+													<span className="ant-divider"></span>
+													<span className="activity_preview"><Link to="/marriage_app/activity_management/activity_detail" query={{ activity_id : element.activity_id }} >查看</Link></span>
+													<span className="activity_statistics">
+														<span>阅读 { element.activity_statistics.read }</span>
+														<span>报名 { element.activity_statistics.sign_up }</span>
+														<span>评论 { element.activity_statistics.comment }</span>
+													</span>
+													<span className="activity_date">{ element.activity_date }</span>
 												</div>
 											</div>
 										</div>
-									</div>
-								)
-							} )	:	<div className="empty">暂无活动</div>
-					}
-					<div className="pager">
-						<Pager total={ this.state.pages } onSkipTo={ (page) => { this.queryByPage(page) } }/>
+									)
+								} )	: <div className="activity_empty">这里是空的哦 ~ </div>
+						}
+					</Spin>
+					<div className="activity_pagination">
+						<Pagination onChange={ ( page ) => this.onChange( page ) } current={ this.state.page_number } total = { this.state.activity_list_total } pageSize = { 5 } />
 					</div>
 				</div>
 			</div>

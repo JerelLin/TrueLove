@@ -1,0 +1,9 @@
+.register .register_form{
+	height:380px;
+}
+.register .register_form .agree{
+	width:380px;
+	height:60px;
+	padding-left:20px;
+	line-height:60px;
+}

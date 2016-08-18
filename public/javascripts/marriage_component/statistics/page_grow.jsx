@@ -1,207 +1,59 @@
 import React from "react";
-// import { LineChart } from "react-d3-components";
+import { Table, Select } from "antd";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "Recharts";
-import Select from "../common_component/select.jsx";
-import request from "superagent";
+
 import "../../../stylesheets/marriage_component/statistics/page_grow.css";
 
-class Page_Grow extends React.Component{
+const Option = Select.Option;
 
-	constructor(props){
-		super(props);
-		window.scrollTo(0,0);
-		var flow_sum={
-			click_sum : 1000000,
-			visitor_sum : 1000,
-			click_average : 1000
-		};
-		var flow_recent={
-			data : [
-				{
-					date : "2016 2 20",
-					visitor : 1000,
-					click : 1000
-				},
-				{
-					date : "2016 2 19",
-					visitor : 1000,
-					click : 1000
-				},
-				{
-					date : "2016 2 18",
-					visitor : 1000,
-					click : 1000
-				},
-				{
-					date : "2016 2 17",
-					visitor : 1000,
-					click : 1000
-				},
-				{
-					date : "2016 2 16",
-					visitor : 1000,
-					click : 1000
-				},
-				{
-					date : "2016 2 15",
-					visitor : 1000,
-					click : 1000
-				},
-				{
-					date : "2016 2 14",
-					visitor : 1000,
-					click : 1000
-				}
-			]
-		};
-		/*grow_data在nodejs层组装后返回，因为grow_data源于flow_recent*/
-		var grow_data = [
+class PageGrow extends React.Component{
 
-			{ 
-				name: '2-14', 
-				"主页访问人数": 1000, 
-				"主页访问次数": 800, 
-				amt: 2400 
-			},
-		      	{ 
-		      		name: '2-13', 
-		      		"主页访问人数": 800,   
-		      		"主页访问次数": 600, 
-		      		amt: 2210 
-		      	},
-		      	{ 
-		      		name: '2-12', 
-		      		"主页访问人数": 850,   
-		      		"主页访问次数": 550, 
-		      		amt: 2290 
-		      	},
-		      	{ 
-		      		name: '2-11', 
-		      		"主页访问人数": 400,   
-		      		"主页访问次数": 600, 
-		      		amt: 2000 
-		      	},
-		      	{ 
-		      		name: '2-10', 
-		      		"主页访问人数": 450,   
-		      		"主页访问次数": 800, 
-		      		amt: 2181 
-		      	},
-		      	{ 
-		      		name: '2-9',   
-		      		"主页访问人数": 500,   
-		      		"主页访问次数": 850, 
-		      		amt: 2500 },
-		      	{ 
-		      		name: '2-8',   
-		      		"主页访问人数": 600,   
-		      		"主页访问次数": 700, 
-		      		amt: 2100 
-		      	}
-		  
-		];
-		this.state={
-			flow_sum : flow_sum,
-			flow_recent : flow_recent,
-			grow_data : grow_data,
-		};
-	}
-
-	componentDidMount(){
-	      	/*初始化主页增长数据(默认获取近七天数据)*/
-	      	request.get("/initPageGrow")
-	      		.end(function(err,res){
-	      			if(err || !res.ok){
-					console.log(err);
-					console.log(res);
-					return false;
-				};
-				console.log("初始化主页增长数据");
-	      		});
-	}
-
-	/*select选择日期时的执行此回调*/
-	onSelectDate(value){
-		request.get("/getFlowByDate")
-			.accept('application/json')		/*接收什么类型的数据*/
-			.query({ SelectDate : value })
-			.end(function(err,res){
-				if(err || !res.ok){
-					console.log(err);
-					return false;
-				};
-				console.log("选择加载:  "+value+"  的数据");
-			});
+	constructor( props ){
+		super( props )
 	}
 
 	render(){
+		const homepage_total_flow_columns = [
+			{ title: "主页累计访问次数", dataIndex: "click_total", key: "click_total" },
+			{ title: "主页累计访问人数", dataIndex: "visitor_total", key: "visitor_total" }, 
+			{ title: "人均主页累计访问次数", dataIndex: "click_average", key: "click_average" }
+		];
+		const homepage_recent_flow_columns = [
+			{ title: "日期", dataIndex: "date", key: "date" },
+			{ title: "主页访问人数", dataIndex: "visitor", key: "visitor" }, 
+			{ title: "主页访问次数", dataIndex: "click", key: "click" }
+		];
 		return(
-			<div className="page_flow">
-				<div className="flow_sum">
-					<div className="flow_title">累计流量统计</div>
-					<div className="flow_sum_table">
-						<table className="table">
-							<tbody>
-								<tr className="table_header">
-									<td>主页累计访问次数</td>
-									<td>主页累计访问人数</td>
-									<td>人均主页累计访问次数</td>
-								</tr>
-								<tr>
-									<td>{ this.state.flow_sum.click_sum }</td>
-									<td>{ this.state.flow_sum.visitor_sum }</td>
-									<td>{ this.state.flow_sum.click_average }</td>
-								</tr>
-							</tbody>
-						</table>
+			<div className="page_grow">
+				<div className="homepage_total_flow">
+					<div className="homepage_total_flow_title title">累计流量统计</div>
+					<div className="homepage_total_flow_table">
+						<Table columns = { homepage_total_flow_columns } dataSource = { this.props.homepage_total_flow } pagination = { false } />
 					</div>
 				</div>
-				<div className="flow_recent">
-					<div className="flow_title">近期流量统计</div>
-					<div className="date_option">
+				<div className="homepage_recent_flow">
+					<div className="homepage_recent_flow_title title">近期流量统计</div>
+					<div className="date_select">
 						<label>选择日期</label>
-						<Select initValue={ "最近七天" } onSelectOption={ (value) => this.onSelectDate(value) }>
-							<div option="最近七天"></div>
-							<div option="最近十四天"></div>
-						</Select>
+						<Select labelInValue defaultValue = {{ key: "7" }} style = {{ width: 150 }} onChange = { ( value ) => this.props.date_select( value ) }>
+					    	<Option value = "7"> 最近一个星期 </Option>
+					      	<Option value = "30"> 最近一个月 </Option>
+					    </Select>
 					</div>
-					<div className="flow_table_show">
-						<table className="table">
-							<tbody>
-								<tr className="table_header">
-									<td>时间</td>
-									<td>主页访问人数</td>
-									<td>主页访问次数</td>
-								</tr>
-								{
-									this.state.flow_recent.data.map( (element,index) => {
-										return(
-											<tr key={ index }>
-												<td>{ element.date }</td>
-												<td>{ element.visitor }</td>
-												<td>{ element.click }</td>
-											</tr>
-										);
-									})
-								}
-							</tbody>
-						</table>
+					<div className="homepage_recent_flow_table">
+						<Table columns = { homepage_recent_flow_columns } dataSource = { this.props.homepage_recent_flow } />
 					</div>
-					<div className="flow_d3_show">
-						<div className="flow_d3_show_title"> 增长趋势</div>
-						<div className="note">
-							
-						</div>
-						<LineChart width={862} height={400} data={this.state.grow_data}
-					            		      margin={{top: 20, right: 10, left: 10, bottom: 40}}>
-					       		<XAxis dataKey="name"/>
-					       		<YAxis/>
-					       		<CartesianGrid strokeDasharray="3 3"/>
-					       		<Tooltip/>
-					       		<Legend />
-					       		<Line type="monotone" dataKey="主页访问人数" stroke="#8884d8" activeDot={{r: 8}}/>
-					       		<Line type="monotone" dataKey="主页访问次数" stroke="#82ca9d" />
-					      	</LineChart>
+					<div className="homepage_recent_flow_Chart">
+						<div className="homepage_recent_flow_Chart_title title"> 增长趋势</div>
+						<LineChart width = { 862 } height = { 400 } data = { this.props.trend_growth } margin={{ top: 20, right: 20, left: 0, bottom: 40 }}>
+					    	<XAxis dataKey="name"/>
+					       	<YAxis/>
+					       	<CartesianGrid strokeDasharray="3 3"/>
+					       	<Tooltip/>
+					       	<Legend />
+					       	<Line type="monotone" dataKey="主页访问人数" stroke="#8884d8" activeDot={{ r: 8 }}/>
+					       	<Line type="monotone" dataKey="主页访问次数" stroke="#82ca9d" />
+					    </LineChart>
 					</div>
 				</div>
 			</div>
@@ -209,4 +61,4 @@ class Page_Grow extends React.Component{
 	}
 };
 
-export default Page_Grow;
+export default PageGrow;

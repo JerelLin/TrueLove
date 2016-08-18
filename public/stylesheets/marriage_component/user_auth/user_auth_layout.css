@@ -1,0 +1,64 @@
+*{
+	margin:0;
+	padding:0;
+}
+html,body{
+	width:100%;
+	height:100%;
+}
+#app{
+	width:100%;
+	height:100%;
+}
+.user_auth_box{
+	width:100%;
+	height:100%;
+	background-image:url("../../../images/bg.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.user_auth_box_main{
+	margin:0px auto;
+	width:400px;
+	position:relative;
+	top:50px;
+}
+.user_auth_box_main .user_auth_form{
+	width:400px;
+	border:1px solid #fff;
+	background-color:#FFF;
+	border-radius: 10px;
+}
+.user_auth_box_main .user_auth_form_title{
+	width:100%;
+	height:80px;
+	font-size:20px;
+	line-height:80px;
+	text-align:center;
+	color:#666;
+	border-bottom:1px solid #bfbfbf;
+}
+.user_auth_box_main .text_input_wrap{
+	width:100%;
+	height:60px;
+	border-bottom:1px solid #bfbfbf;
+}
+.user_auth_box_main .text_input{
+	width:360px;
+	height:40px;
+	padding:10px 20px;
+	border:none;
+	color:#333;
+	font-size:14px;
+	margin:10px auto;
+}
+.user_auth_box_main .ant-btn{
+	width:140px;
+	height:40px;
+}
+.user_auth_box_main .submit_wrap{
+	width:100%;
+	height:60px;
+	text-align:center;
+	line-height:60px;
+}

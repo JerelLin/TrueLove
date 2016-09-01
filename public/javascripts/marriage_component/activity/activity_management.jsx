@@ -19,7 +19,7 @@ class Activity_management extends React.Component{
 			activity_list_total : 0,
 			activity_list_data : [{
 				activity_statistics : { read : "", sign_up : "", comment : "" },
-				activity_cover : "",
+				activity_cover : "http://7xteli.com1.z0.glb.clouddn.com/011e1855ed01ce6ac7251df877053e.png",
 				activity_subject : "",
 				activity_content : "",
 				activity_date : "",
@@ -38,8 +38,7 @@ class Activity_management extends React.Component{
 					activity_list_loading : false,
 					activity_list_total : result.body.activity_list_total,
 					activity_list_data : result.body.activity_list_data
-				});
-				console.log(result.body.activity_list_data);
+				})
 			})
 			.catch((error) => { console.log(error) });
 	}

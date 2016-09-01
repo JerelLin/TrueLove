@@ -1,396 +1,247 @@
 import React from "react";
-import { Subject } from "../layout_component/subject.jsx";
-import Input from "../common_component/input.jsx";
-import Textarea from "../common_component/textarea.jsx";
-import Editor from "../common_component/editor.jsx";
-import Cancel from "../common_component/cancel_button.jsx";
-import Submit from "../common_component/submit_button.jsx";
-import DateSelected from "../common_component/dateSelected.jsx";
-import ImgCrop from "../activity/img_crop.jsx";						/*封面上传、预览*/
-import Modal from "boron/DropModal";	 						/*遮罩层组件*/
+import { browserHistory } from "react-router";
+import { Spin, Input, Button, notification, DatePicker } from "antd";
+import Subject from "../layout_component/subject.jsx";
+import CropperModal from "../common_component/cropperModal.jsx";
+import Editor from "../common_component/richEditor.jsx";
+import { fetch_data_get, fetch_data_post } from "../../../../mini_function/fetch.js";
+import { checked_empty } from "../../../../mini_function/validate.js";
+import { dataURItoBlob } from "../../../../mini_function/dataURItoBlob.js";
+
 import "../../../stylesheets/marriage_component/activity/activity_publish.css";
 
-class Activity extends React.Component{
+class ActivityPublish extends React.Component{
 
-	constructor(props){
-		super(props);
-		window.scrollTo(0,0);
-		this.mid_detail=null;		/*直接为detail设置状态富文本编辑器会出问题*/
-		this.state={
-			/*material*/
-			title : "",			/*需要判断字符长度，所以用null的话会报错*/
-			date : null,
-			site : "",
-			deadline : null,
-			brief : "",
-			img : null,
+	constructor( props ){
+		super( props )
+		let query = this.props.location.query;
+		this.state = {
+			init_loading : false,
+			save_loading : false,
+			publish_loading : false,
 
-			errMess : null, 		/*错误提示*/
-
-			forbidClose : false,	/*遮罩层的关闭按钮是否禁止？false为不禁止，true为禁止*/
-		};
-	}
-
-	/*
-	*********************************************************************************************
-	*获取素材后渲染表单
-	*********************************************************************************************
-	 */
-	/*根据素材传递而来的活动标题发送异步请求获取之前保存的数据*/
-	/*此方法被调用的时候子组件已经被架置，因为constructor为组件即将被架置时所调用的方法，*/
-	/*所以state已经被初始化，此时如果想重新更改state，可以在子组件中添加componentWillReceiveProps方法*/
-	componentDidMount(){
-		/* 或者 var query = this.props.location.query */
-		var _this=this;
-	      	var { query } = this.props.location;
-		var timestamp = query.timestamp;
-		if(timestamp){
-			console.log("时间戳为:  " + timestamp + "  =>将会根据此时间戳获取到相应素材的数据");	//时间戳
-			request.get("/getMaterial")
-				.accept('application/json')		/*接收什么类型的数据*/
-				.query({
-					timestamp : timestamp
-				})
-				.end(function(err,res){
-					if(err || !res.ok){
-						console.log(err);
-						return false;
-					};
-					console.log("已经初始化时间戳为 "+timestamp+" 的素材");		//时间戳
-					_this.mid_detail="<p>详情</p>";
-					_this.setState({
-						title : "标题",
-						date : "2016-12-10",
-						site : "地点",
-						deadline : "2017-01-01",
-						brief : "简介",
-						img : "../../../images/1459782264000.jpg"
-					});
-				});
+			activity_subject : query.material_subject || "",
+			activity_introduction : query.material_introduction || "",
+			activity_start : query.material_start || "",
+			activity_deadline : query.material_deadline || "",
+			activity_site : query.material_site || "",
+			activity_content : query.material_content || "",
+			activity_cover : query.material_cover || "http://7xteli.com1.z0.glb.clouddn.com/011e1855ed01ce6ac7251df877053e.png",
 		}
-	}
-
-
-	/*
-	*********************************************************************************************
-	*获取各表单输入值
-	*********************************************************************************************
-	 */
-	/*提取各输入框的输入值存入state*/
-	collect_value(event,type){
-		var { value } = event.currentTarget;
-		this.setState({
-			[ type ] : value
-		});
-		//console.log( typeof( type ) ); 	=> string
-		//console.log( typeof( [ type ] ) ); => object
-	}
-
-	/*从富文本编辑器获取活动详情*/
-	get_detail(value){
-		console.log("活动详情:" + value);
-		this.mid_detail=value;
-	}
-
-	/*获得活动时间和活动截止时间*/
-	get_date(date,type){
-		//在state里面保存完整的date，需要时再做日期字符提取
-		// var dateString = date._d.getFullYear()+"-"+(date._d.getMonth()+1)+"-"+date._d.getDate();
-		this.setState({
-			[ type ] : date
-		});
-		// console.log(date._d.getFullYear()+"-"+(date._d.getMonth()+1)+"-"+date._d.getDate());
-	}
-
-	/*获取图片链接(二进制数据流)*/ 
-	get_imgurl(baseUrl){
-		this.setState({
-			img : baseUrl
-		});
-		// console.log(baseUrl);
-	}
-
-	/*将一段二进制数据流封装为一个数据流对象*/
-	//**dataURL to blob**
-	dataURLtoBlob(dataurl){
-		var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-		bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-		while(n--){
-			u8arr[n] = bstr.charCodeAt(n);
-		}
-		return new Blob([u8arr], {type:mime});
-	}
-
-
-	/*
-	*********************************************************************************************
-	*保存发布时 de 操作
-	*********************************************************************************************
-	 */
-	
-	/*封装formdata对象*/
-	toFormData(form){
-		// 封装formdata对象，formdata对象可以包含json
-		form.append("title",this.state.title);
-		form.append("site",this.state.site);
-		form.append("brief",this.state.brief);
-		form.append("detail",this.mid_detail);
-		/************************************************************
-		 *比如根据时间戳获取相应的素材?
-		*************************************************************/
-		if(this.state.date&&this.state.date._d){
-			form.append("date",this.state.date._d.getFullYear()+"-"+(this.state.date._d.getMonth()+1)+"-"+this.state.date._d.getDate());
-		}else{
-			/*因为从素材那边传递而来的是拼接好后的date字符串*/
-			form.append("date",this.state.date);
-		};
-		if(this.state.deadline&&this.state.deadline._d){
-			form.append("deadline",this.state.deadline._d.getFullYear()+"-"+(this.state.deadline._d.getMonth()+1)+"-"+this.state.deadline._d.getDate());
-		}else{
-			/*因为从素材那边传递而来的是拼接好后的date字符串*/
-			form.append("deadline",this.state.deadline);
-		};
-
-		/*检测为base64字符串时*/
-		if( this.state.img.indexOf("base64")>0 ){
-			//点击素材库重新编辑封面只是一个来自服务端的url，不是base64数据流，
-			//所以判断一下，如果是URL字符的话就无需上传了
-			//可是无需上传的话是不是还需要把图片从素材区转移到活动发布区？
-			// console.log(Date.parse( new Date() ));
-			form.append('image', this.dataURLtoBlob(this.state.img),Date.parse( new Date() )+".jpg");
-		}else{
-			form.append('image', null);
-		};
-		return form;
 	}
 	
-	/*保存为素材时调用*/
-	handleSave(){
-		var _this=this;
-		var form=new FormData();
-		if(this.state.title.length==0||this.state.title.length>30){
-			// alert("活动标题字数有误");
-			this.setState({
-				errMess : "活动标题字数有误" 
-			});
-			this.showModal(false);
-			return false;
+	// 获取活动标题 简介 地点输入值
+	handleChange( event, type ){
+		switch( type ){
+			case "activity_subject" : 
+				this.setState({ activity_subject : event.target.value });
+				break;
+			case "activity_introduction" : 
+				this.setState({ activity_introduction : event.target.value });
+				break;
+			case "activity_site" : 
+				this.setState({ activity_site : event.target.value });
+				break;
+			default :
+				break;
+		}
+	}
+
+	// 获取时间
+	set_time( value, dateString, type ){
+		switch( type ){
+			case "activity_start" : 
+				this.setState({ activity_start : dateString });
+				break;
+			case "activity_deadline" : 
+				this.setState({ activity_deadline : dateString });
+				break;
+			default :
+				break;
+		}
+	}
+
+	// 获取富文本编辑器内容
+	set_content( content ){
+		this.setState({ activity_content : content })
+		console.log( content )
+	}
+
+	// 获取活动封面剪裁数据
+	passUrlData( result ){
+		this.setState({ activity_cover : result })
+	}
+	
+	// 保存( 活动标题 和 活动简介 不能为空 )
+	handleSave(  ){
+		let _this = this;
+		this.setState({ save_loading : true });
+
+		let activity_subject = this.state.activity_subject;
+		let activity_introduction = this.state.activity_introduction;
+
+		let activity_content = this.state.activity_content;
+		let activity_site = this.state.activity_site;
+		let activity_start = this.state.activity_start;
+		let activity_deadline = this.state.activity_deadline;
+		let activity_cover = this.state.activity_cover;
+
+		// 验证 活动标题 和 活动简介 是否为空
+		let checked_empty_result = checked_empty([ activity_subject, activity_introduction ], "活动标题和活动简介不可以为空");
+
+		if( checked_empty_result == false ){
+			_this.setState({ save_loading : false });
+			return;
 		};
 
-		if(this.state.img==null){
-			this.setState({
-				errMess : "上传一张图片作为封面吧"
-			});
-			this.showModal(false);
-			return false;
-		}
+		let material_form = new FormData(  );
 
-		this.setState({
-			errMess : "正在保存..."
-		});
-		_this.showModal(true);
+		material_form.append( "material_subject", activity_subject );
+		material_form.append( "material_introduction", activity_introduction );
+		material_form.append( "material_content", activity_content );
+		material_form.append( "material_site", activity_site );
+		material_form.append( "material_start", activity_start );
+		material_form.append( "material_deadline", activity_deadline );
 
-		this.toFormData(form);
-		request.post("/save")
-			.send(form)
-			.end(function(err,res){
-				if(err || !res.ok){
-					console.log(err);
-					return false;
+		if( activity_cover.length > 10000 ){
+			// 如果为二进制数据字符
+			material_form.append( "material_cover", dataURItoBlob( activity_cover ) );
+		} else {
+			material_form.append( "material_cover", activity_cover );
+		};
+
+		material_form.append( "token", localStorage.marriage_app_token );
+
+		console.log( material_form );
+
+		fetch_data_post("/marriage_api/save_material", material_form, {    } )
+			.then(( result ) => {
+				_this.setState({ save_loading : false });
+				if( result.body.error ){
+					notification["error"]({
+		      				message: "错误",
+		      				description: result.body.message
+		    			});
+	    				return;
 				};
-				_this.setState({
-					errMess : "保存成功"
-				});
-				_this.showModal(true);
-				setTimeout(function(){
-					_this.props.history.replaceState(null, '/marriage_app/Material');
-				},2000);
-			});
+				// 保存成功
+				notification["success"]({
+		      			message: "成功",
+		      			description: result.body.message
+		    		});
+				setTimeout(function(  ){
+					browserHistory.push("/marriage_app");
+				}, 1000)
+			})
+			.catch(( error ) => console.log( error ));
+
 	}
 
-	/*发布活动时调用*/
-	handlePublish(){
-		var _this=this;
-		var form=new FormData();
-		if(this.state.title.length==0||this.state.title.length>30){
-			this.setState({
-				errMess : "活动标题字数有误"
-			});
-			this.showModal(false);
-			return false;
-		}
-		if(this.state.date==null){
-			this.setState({
-				errMess : "请选择活动时间"
-			});
-			this.showModal(false);
-			return false;
-		}
-		if(this.state.site==""){
-			this.setState({
-				errMess : "活动地点不能为空"
-			});
-			this.showModal(false);
-			return false;
-		}
-		if(this.state.deadline==null){
-			this.setState({
-				errMess : "请选择报名截止日期"
-			});
-			this.showModal(false);
-			return false;
-		}
-		if(this.mid_detail==null || this.mid_detail=="<p><br></p>" || this.mid_detail=="<p></p>" || this.mid_detail==""){
-			this.setState({
-				errMess : "详情不能为空"
-			});
-			this.showModal(false);
-			return false;
-		}
-		if(this.state.brief.length==0 || this.state.brief.length>150){
-			this.setState({
-				errMess : "活动简介字数有误"
-			});
-			this.showModal(false);
-			return false;
-		}
-		if(this.state.img==null){
-			this.setState({
-				errMess :  "上传一张图片作为封面吧"
-			});
-			this.showModal(false);
-			return false;
-		}
+	// 发布( 必须全部填写完成 )
+	handlePublish(  ){
+		let _this = this;
+		this.setState({ publish_loading : true });
 
-		this.setState({
-			errMess : "请稍等一下~"
-		});
-		_this.showModal(true);
+		let activity_subject = this.state.activity_subject;
+		let activity_introduction = this.state.activity_introduction;
+		let activity_content = this.state.activity_content;
+		let activity_site = this.state.activity_site;
+		let activity_start = this.state.activity_start;
+		let activity_deadline = this.state.activity_deadline;
+		let activity_cover = this.state.activity_cover;
 
-		this.setState({
-			detail : this.mid_detail		/*mid_detail被确定为即将发布的内容之后将赋予detail*/
-		});
-		this.toFormData(form);
-		request.post("/publish")			/*保险起见替换为jquery的ajax？*/
-			.send(form)
-			.end(function(err,res){
-				if(err || !res.ok){
-					console.log(err);
-					_this.setState({
-						errMess : "发布失败"
-					});
-					_this.showModal(false);
-					return false;
+		// 验证表单是否填写完整
+		let checked_empty_result = checked_empty([ activity_subject, activity_introduction, activity_content, activity_site, activity_start, activity_deadline, activity_cover ]);
+
+		if( checked_empty_result == false ){
+			_this.setState({ publish_loading : false });
+			return;
+		};
+
+		let publish_form = new FormData(  );
+
+		publish_form.append( "activity_subject", activity_subject );
+		publish_form.append( "activity_introduction", activity_introduction );
+		publish_form.append( "activity_content", activity_content );
+		publish_form.append( "activity_site", activity_site );
+		publish_form.append( "activity_start", activity_start );
+		publish_form.append( "activity_deadline", activity_deadline );
+
+		if( activity_cover.length > 10000 ){
+			// 如果为二进制数据字符
+			publish_form.append( "activity_cover", dataURItoBlob( activity_cover ) );
+		} else {
+			publish_form.append( "activity_cover", activity_cover );
+		};
+
+		publish_form.append( "token", localStorage.marriage_app_token );
+
+		console.log( publish_form );
+
+		fetch_data_post("/marriage_api/publish_activity", publish_form, {    } )
+			.then(( result ) => {
+				_this.setState({ publish_loading : false });
+				if( result.body.error ){
+					notification["error"]({
+		      				message: "错误",
+		      				description: result.body.message
+		    			});
+	    				return
 				};
-				_this.setState({
-					errMess : "发布成功"
-				});
-				_this.showModal(true);
-				setTimeout(function(){
-					_this.props.history.replaceState(null, '/marriage_app/Activity_management');
-					// location.href="/marriage_app/Activity_management"; 	/*弹出"发布成功"提示，2秒后跳转到活动管理页面*/
-				},2000);
-			});
+				// 发布成功
+				notification["success"]({
+		      			message: "成功",
+		      			description: result.body.message
+		    		});
+				setTimeout(function(  ){
+					browserHistory.push("/marriage_app");
+				}, 1000)
+			})
+			.catch(( error ) => console.log( error ));
 	}
 
-	/*提示遮罩层出现*/
-	showModal(forbidState){
-		this.setState({
-			forbidClose : forbidState
-		});
-        		this.refs.modal.show();
-    	}
-
-    	/*提示遮罩层消失*/
-    	hideModal(){
-        		this.refs.modal.hide();
-    	}
-
-    	/*
-	*********************************************************************************************
-	*视图区域
-	*********************************************************************************************
-	 */
-	render(){
+	render(  ){
 		return(
 			<div className="activity_publish">
-
-				{/*遮罩层*/}
-				<Modal ref="modal">
-					<div className="errMessCloseBox">
-						{
-							this.state.forbidClose==true ? "" : <span className="errMessClose" onClick={ () => this.hideModal() }></span>
-						}
-					</div>
-					<div className="errMess">{ this.state.errMess }</div>
-				</Modal>
 				<Subject subject_content = "发布相亲活动" />
-				<form encType="multipart/form-data" className="activity_publish_main" action="#" method="post" ref="publishFrom">
-					{/*标题*/}
-					<div className="activity_publish_title">
-						<p>活动标题：</p>
-						{
-							this.state.title.length<30 ? <p ref="tip" className="word_tip">还可以输入<em>{ 30-this.state.title.length }</em>字</p> : <p ref="title_tip" className="word_tip">已经超出<em className="error">{ this.state.title.length-30 }</em>字</p>
-						}
-						<Input name="title"
-							ref="title"
-							placeholder="不超过三十个字符" 
-							onValue={ (event) => this.collect_value(event,"title") }
-							init_value={ this.state.title }/>
+				<div className="activity_publish_main">
+					<div className="activity_publish_section activity_subject">
+						<label>活动标题：</label>
+						<Input size="large" defaultValue={ this.state.activity_subject } placeholder="不超过三十个字符" onChange={ (event) => this.handleChange(event, "activity_subject") }/>
 					</div>
-					{/*日期*/}
-					<div className="activity_publish_date">
-						<span className="date_left">选择活动时间：</span>
-						<span className="date_right"><DateSelected init_value={ this.state.date } onSetDate={ (date) => this.get_date(date,"date") }/></span>
+					<div className="activity_publish_section activity_introduction">
+						<label>活动简介：</label>
+						<Input type="textarea" defaultValue={ this.state.activity_introduction } placeholder="请输入一百字以内" onChange={ (event) => this.handleChange(event, "activity_introduction") }/>
 					</div>
-					{/*地点*/}
-					<div className="activity_publish_site">
-						<span className="site_left">输入活动地点：</span>
-						<span className="site_right">
-							<Input name="site"
-								ref="site"
-								placeholder="请输入活动地点" 
-								onValue={ (event) => this.collect_value(event,"site") }
-								init_value={ this.state.site }/>
-						</span>
+					<div className="activity_publish_section activity_start">
+						<label>选择活动时间：</label>
+						<DatePicker showTime format="yyyy-MM-dd HH:mm:ss" defaultValue={ this.state.activity_start } placeholder="请选择时间" onChange = { (value, dateString) => this.set_time(value, dateString, "activity_start") } />
 					</div>
-					{/*截止日期*/}
-					<div className="activity_publish_deadline">
-						<span className="deadline_left">报名截止时间：</span>
-						<span className="deadline_right"><DateSelected init_value={ this.state.deadline } onSetDate={ (date) => this.get_date(date,"deadline") }/></span>
+					<div className="activity_publish_section activity_deadline">
+						<label>报名截止时间：</label>
+						<DatePicker showTime format="yyyy-MM-dd HH:mm:ss" defaultValue={ this.state.activity_deadline } placeholder="请选择时间" onChange = { (value, dateString) => this.set_time(value, dateString, "activity_deadline") } />
 					</div>
-					{/*详情*/}
-					<div className="activity_publish_detail">
-						<p>添加活动图文详情：</p>
-						<Editor id="editor" init_value={ this.mid_detail } onValue={ (value) => this.get_detail(value) } />
+					<div className="activity_publish_section activity_site">
+						<label>输入活动地点：</label>
+						<Input size="large" defaultValue={ this.state.activity_site } placeholder="不超过三十个字符" onChange={ (event) => this.handleChange(event, "activity_site") }/>
 					</div>
-					{/*简介*/}
-					<div className="activity_publish_brief">
-						<p>简介：</p>
-						{
-							this.state.brief.length<150 ? <p ref="tip" className="word_tip">还可以输入<em>{ 150-this.state.brief.length }</em>字</p> : <p ref="brief_tip" className="word_tip">已经超出<em className="error">{ this.state.brief.length-150 }</em>字</p>
-						}
-						<Textarea name="brief"
-							     ref="brief"
-							     placeholder="不超过一百五十个字符" 
-							     onValue={ (event) => this.collect_value(event,"brief") }
-							     init_value={ this.state.brief }/>
+					<div className="activity_publish_section activity_content">
+						<label>添加活动图文详情：</label>
+						<Editor id="editor" init_value={ this.state.activity_content } onValue={ ( value ) => this.set_content( value ) } />
 					</div>
-
-					{/*封面上传、预览*/}
-					<ImgCrop title={ this.state.title } brief={ this.state.brief } img={ this.state.img } get_imgurl={ (baseUrl) => this.get_imgurl(baseUrl) }/>
-
-					{/*提交按钮区域*/}
-					<div className="activity_publish_button">
-						<span className="button_zone">
-							<Cancel value="保存" onClick={ () => this.handleSave() }/>
-							<Submit value="发布" onClick={ () => this.handlePublish() }/>
-						</span>
+					<div className="activity_publish_section activity_cover_show">
+						<label>上传活动封面：</label>
+						<div className="activity_cover"><img src={ this.state.activity_cover }/></div>
+						<CropperModal aspectRatio = { 900 / 500 } passUrlData = { ( result ) => this.passUrlData( result ) }/>
 					</div>
-				</form>
+					<div className="activity_publish_section">
+						<Button type="primary" loading ={ this.state.save_loading } onClick={ (  ) => this.handleSave(  ) }>保存</Button>							
+						<Button type="primary" loading = { this.state.publish_loading } onClick={ (  ) => this.handlePublish(  ) }>发布</Button>
+					</div>
+				</div>
 			</div>
-		);
+		)
 	}
-};
+}
 
-export default Activity;
+export default ActivityPublish

@@ -1,4 +1,5 @@
 import React from "react";
+
 import "../../../stylesheets/marriage_component/layout_component/subject.css";
 
 class Subject extends React.Component{

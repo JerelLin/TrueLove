@@ -35,11 +35,11 @@
 	height:50px;
 	line-height: 50px;
 }
-.activity_about .activity_name, .activity_about .activity_deadline, .activity_about .activity_start{
+.activity_about .activity_subject, .activity_about .activity_deadline, .activity_about .activity_start{
 	display: inline-block;
 	padding: 0 20px;
 }
-.activity_about .activity_name .label, .activity_about .activity_deadline .label, .activity_about .activity_start .label{
+.activity_about .activity_subject .label, .activity_about .activity_deadline .label, .activity_about .activity_start .label{
 	padding-right: 20px;
 }
 .activity_influence{

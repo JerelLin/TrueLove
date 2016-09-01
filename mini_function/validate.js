@@ -6,9 +6,9 @@ module.exports = {
 		for(let i=0; i<data_arr.length; i++){
 			if(data_arr[i].length == 0 || typeof(data_arr[i]) == "undefined"){
 				notification["warning"]({
-      				message: "提示",
-      				description: user_defined == undefined ? "全部填完吧" : user_defined
-    			});
+	      				message: "提示",
+	      				description: user_defined == undefined ? "全部填完吧" : user_defined
+	    			});
 				return false;
 			}
 		};
@@ -20,9 +20,9 @@ module.exports = {
 		for(let i=0; i<data_arr.length; i++){
 			if(new RegExp("[\\u4E00-\\u9FFF]+","g").test(data_arr[i])){
 				notification["warning"]({
-      				message: "提示",
-      				description: user_defined == undefined ? "输入格式有误" : user_defined
-    			});
+	      				message: "提示",
+	      				description: user_defined == undefined ? "输入格式有误" : user_defined
+	    			});
 				return false;
 			}
 		};
@@ -32,9 +32,9 @@ module.exports = {
 	checked_password(password, confirm_password){
 		if(password != confirm_password){
 			notification["warning"]({
-      			message: "提示",
-      			description: "两次输入密码不一致",
-    		});
+	      			message: "提示",
+	      			description: "两次输入密码不一致",
+	    		});
 			return false;
 		}
 	}

@@ -81,7 +81,7 @@ class ImgCrop extends React.Component{
 				            guides={false}
 				            src={this.state.src}
 				            ref='cropper'
-				            crop={this._crop} />
+				            crop={ cropper => { this.cropper = cropper } } />
 				            <input type="button" id="crop" value="剪裁" onClick={ this._cropImage.bind(this) }/>
 			                         <input type="button" id="close" value="关闭" onClick={ this.hideModal.bind(this) }/>
 			          </Modal>

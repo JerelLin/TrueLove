@@ -6,16 +6,15 @@ module.exports={
 		vendor: ['react', 'react-dom', 'react-router']
 	},
 	output: {
-		path: __dirname + '/public/out/',
+		path: __dirname + "/asset/src/",
 		filename: "[name].js",
-		publicPath: "/out/",
-		chunkFilename: "[name].js"
+		publicPath: "/src/"
 	},
 	module: {
 		loaders: [	
-		    { test: /\.js$/, loader : "babel", query: { presets: ["es2015"] } },
+		    	{ test: /\.js$/, loader : "babel", query: { presets: ["es2015"] } },
 			{ test: /\.css$/, loader: "style!css" },
-			{ test: /\.(jpg|png|otf)$/, loader: "url?limit=8192" },
+			{ test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, loader: "url-loader?limit=50000&name=[path][name].[ext]" },
 			{ test: /\.scss$/, loader : "style!css!sass" },
 			{ test: /\.jsx$/, loader: "babel", query: { presets: ["react", "es2015"] } }
 	   	]

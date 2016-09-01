@@ -21,7 +21,7 @@ class Nav extends React.Component{
 				<li><Link to="/marriage_app/edit_profile" activeClassName={ "active" }>修改资料</Link></li>
 				<li><Link to="/marriage_app/change_password" activeClassName={ "active" }>修改密码</Link></li>
 				<li><Link to="/marriage_app/feedback" activeClassName={ "active" }>意见反馈</Link></li>
-				<li><Link to="/marriage_app/about_turelove" activeClassName={ "active" }>关于“初恋”</Link></li>
+				<li><Link to="/marriage_app/about_truelove" activeClassName={ "active" }>关于“初恋”</Link></li>
 			</ul>
 		);
 	};

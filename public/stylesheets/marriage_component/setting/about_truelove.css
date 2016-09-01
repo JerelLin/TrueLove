@@ -1,0 +1,9 @@
+.about_truelove .ant-carousel{
+	height: 350px;
+	margin-top: 30px;
+	padding: 0 35px;
+	overflow: hidden;
+}
+.about_truelove .ant-carousel img{
+	width: 100%;
+}

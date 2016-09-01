@@ -19,7 +19,7 @@ class Page_analysis extends React.Component{
 			page_analysis_data : {
 				homepage_total_flow : {  },
 				homepage_recent_flow : [ {  } ],
-				homepage_user_property : { sex_property : [ {  } ], age_property : [ {  } ], education_property : [ {  } ], salary_property : [ {  } ] }
+				homepage_user_property : { h_sex_property : [ {  } ], h_age_property : [ {  } ], h_education_property : [ {  } ], h_salary_property : [ {  } ] }
 			}
 		};
 	}
@@ -40,7 +40,7 @@ class Page_analysis extends React.Component{
 				});
 				_this.setState({ loading : false, trend_growth : trend_growth, page_analysis_data : { homepage_total_flow : homepage_total_flow, homepage_recent_flow : homepage_recent_flow, homepage_user_property : homepage_user_property } });
 			})
-			.catch(( error ) => console.log( error ));      
+			.catch(( error ) => console.log( error ));
 	}
 
 	// 切换选项卡

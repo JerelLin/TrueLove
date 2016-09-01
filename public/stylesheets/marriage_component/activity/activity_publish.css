@@ -1,180 +1,32 @@
-*{
-	margin: 0;
-	padding: 0;
+.activity_publish_main .activity_publish_section{
+	margin-top: 20px;
+	padding-left: 35px;
 }
-
-.activity_publish_header{
-	width: 100%;
-	height: 65px;
-	line-height: 65px;
-	border-bottom: 1px solid #ededed;
+.activity_subject .ant-input{
+	display: block !important;
+	margin-top: 10px;
+	width: 450px;
 }
-.activity_publish_header span{
-	margin-left: 35px;
-	font-size: 14px;
-	color: #333;
+.activity_introduction .ant-input{
+	display: block !important;
+	margin-top: 10px;
+	width: 450px;
+	height: 150px;
 }
-.activity_publish_main{
-	width: 852px;
-	min-height: 1648px;
-	margin: 0 auto;
-	/*border: 1px solid #a6d7b1;*/
+.activity_site .ant-input{
+	display: block !important;
+	margin-top: 10px;
+	width: 450px;
 }
-
-/*=> 字数提示*/
-.word_tip{
-	float:right;
+.activity_cover_show img{
+	width: 300px;
 }
-.word_tip em{
-	font-size:18px;
-}
-.word_tip .error{
-	color:#F40D32;
-}
-
-.activity_publish_title,
-.activity_publish_date,
-.activity_publish_site,
-.activity_publish_deadline,
-.activity_publish_detail,
-.activity_publish_img,
-.activity_publish_brief,
-.activity_publish_preview,
-.activity_publish_button{
-	margin-top: 60px;
-}
-/*标题*/
-.activity_publish_title{
-	width: 100%;
-	min-height: 88px;
-}
-.activity_publish_title p{
-	color: #333;
-	font-size: 16px;
-	height: 20px;
-	line-height: 20px;
-}
-.activity_publish_title .input_component{
-	width: 832px;
-	height: 68px;
-	padding-left: 20px;
-	margin-top: 15px;
-}
-
-/*日期*/
-.activity_publish_date{
-	width: 100%;
-	min-height: 45px;
-}
-.activity_publish_date .date_left{
-	display: inline-block;
-	width: 145px;
-	height: 35px;
-	float: left;
-	color: #333;
-	font-size: 16px;
-	line-height: 35px;
-}
-.activity_publish_date .date_right{
-	display: inline-block;
-	width: 705px;
-	height: 35px;
-	float: right;
-}
-
-/*地点*/
-.activity_publish_site{
-	width: 100%;
-	min-height: 78px;
-}
-.activity_publish_site .site_left{
-	display: inline-block;
-	width: 145px;
-	height: 100%;
-	float: left;
-	color: #333;
-	font-size: 16px;
-	line-height: 35px;
-}
-.activity_publish_site .site_right{
-	display: inline-block;
-	width: 705px;
-	height: 100%;
-	float: right;
-}
-.activity_publish_site .site_right .input_component{
-	width: 685px;
-	height: 78px;
-	padding-left: 20px;
-}
-
-/*截止日期*/
-.activity_publish_deadline{
-	width: 100%;
-	min-height: 45px;
-}
-.activity_publish_deadline .deadline_left{
-	display: inline-block;
-	width: 145px;
-	height: 35px;
-	float: left;
-	color: #333;
-	font-size: 16px;
-	line-height: 35px;
-}
-.activity_publish_deadline .deadline_right{
-	display: inline-block;
-	width: 705px;
-	height: 35px;
-	float: right;
-}
-
-
-/*详情*/
-.activity_publish_detail{
-	width: 100%;
-	min-height: 235px;
-}
-.activity_publish_detail p{
-	color: #333;
-	font-size: 16px;
-	height: 20px;
-	line-height: 20px;
-}
-.activity_publish_detail .textarea_component{
-	width: 832px;
-	height: 215px;
-	margin-top: 15px;
-}
-
-/*简介*/
-.activity_publish_brief{
-	width: 100%;
-	min-height: 220px;
-}
-.activity_publish_brief p{
-	color: #333;
-	font-size: 16px;
-	height: 20px;
-	line-height: 20px;
-}
-.activity_publish_brief .textarea_component{
-	width: 810px;
-	height: 165px;
-	margin-top: 15px;
-}
-
-
-/*按钮*/
-.activity_publish_button{
-	width: 100%;
-	min-height: 50px;
-	margin-top: 30px;
+.activity_cover{
+	margin-top: 20px;
 	margin-bottom: 20px;
 }
-.activity_publish_button .button_zone{
-	width: 280px;
-	height: 100%;
-	line-height: 50px;
-	float: right;
+.activity_publish_section .ant-btn{
+	margin-right: 20px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }

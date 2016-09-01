@@ -29,10 +29,12 @@
 	font-size: 14px;
 }
 .nav li a:hover{
-	color: #FFF !important;
-	background-color: #2db7f5;
+	color: #2db7f5 !important;
 }
 .nav li .active{
 	color: #FFF !important;
 	background-color: #2db7f5;
+}
+.nav li .active:hover{
+	color: #FFF !important;
 }

@@ -12,7 +12,7 @@ class PageGrow extends React.Component{
 		super( props )
 	}
 
-	render(){
+	render(  ){
 		const homepage_total_flow_columns = [
 			{ title: "主页累计访问次数", dataIndex: "click_total", key: "click_total" },
 			{ title: "主页累计访问人数", dataIndex: "visitor_total", key: "visitor_total" }, 
@@ -36,9 +36,9 @@ class PageGrow extends React.Component{
 					<div className="date_select">
 						<label>选择日期</label>
 						<Select labelInValue defaultValue = {{ key: "7" }} style = {{ width: 150 }} onChange = { ( value ) => this.props.date_select( value ) }>
-					    	<Option value = "7"> 最近一个星期 </Option>
-					      	<Option value = "30"> 最近一个月 </Option>
-					    </Select>
+					    		<Option value = "7">最近一个星期</Option>
+					      		<Option value = "30">最近一个月</Option>
+					    	</Select>
 					</div>
 					<div className="homepage_recent_flow_table">
 						<Table columns = { homepage_recent_flow_columns } dataSource = { this.props.homepage_recent_flow } />
@@ -57,7 +57,7 @@ class PageGrow extends React.Component{
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 };
 

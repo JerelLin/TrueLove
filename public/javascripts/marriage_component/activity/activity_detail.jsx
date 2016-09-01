@@ -18,8 +18,8 @@ class Activity_detail extends React.Component{
 			activity_detail_loading : false,
 			comment_page : 1,
 			activity_detail : {
-				activity_cover : "", 
-				activity_name : "", 
+				activity_cover : "http://7xteli.com1.z0.glb.clouddn.com/011e1855ed01ce6ac7251df877053e.png", 
+				activity_subject : "", 
 				activity_deadline : "", 
 				activity_start : "",
 				comment_total : 0,
@@ -64,9 +64,9 @@ class Activity_detail extends React.Component{
 						<div className="activity_information">
 							<div className="activity_cover"><img src={ this.state.activity_detail.activity_cover }/></div>
 							<div className="activity_about">
-								<div className="activity_name">
+								<div className="activity_subject">
 									<span className="label">活动名称 :</span>
-									<span className="label_value">{ this.state.activity_detail.activity_name }</span>
+									<span className="label_value">{ this.state.activity_detail.activity_subject }</span>
 								</div>
 								<div className="activity_deadline">
 									<span className="label">报名截止 :</span>

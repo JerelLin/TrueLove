@@ -40,6 +40,11 @@ ReactDOM.render(
 					require.ensure( [ ], (require) => { 
 						callback(null, require("../marriage_component/activity/news").default) 
 					}) } }/>
+				{/*活动发布*/}
+				<Route path="/marriage_app/activity_publish" getComponent={ (nextState, callback) =>{ 
+					require.ensure( [ ], (require) => { 
+						callback(null, require("../marriage_component/activity/activity_publish").default) 
+					}) } }/>
 				{/*素材*/}
 				<Route path="/marriage_app/material" getComponent={ (nextState, callback) =>{ 
 					require.ensure( [ ], (require) => { 
@@ -64,6 +69,26 @@ ReactDOM.render(
 				<Route path="/marriage_app/activity_analysis" getComponent={ (nextState, callback) =>{ 
 					require.ensure( [ ], (require) => { 
 						callback(null, require("../marriage_component/statistics/activity_analysis").default) 
+					}) } }/>
+				{/*修改资料*/}
+				<Route path="/marriage_app/edit_profile" getComponent={ (nextState, callback) =>{ 
+					require.ensure( [ ], (require) => { 
+						callback(null, require("../marriage_component/setting/edit_profile").default) 
+					}) } }/>
+				{/*修改密码*/}
+				<Route path="/marriage_app/change_password" getComponent={ (nextState, callback) =>{ 
+					require.ensure( [ ], (require) => { 
+						callback(null, require("../marriage_component/setting/change_password").default) 
+					}) } }/>
+				{/*意见反馈*/}
+				<Route path="/marriage_app/feedback" getComponent={ (nextState, callback) =>{ 
+					require.ensure( [ ], (require) => { 
+						callback(null, require("../marriage_component/setting/feedback").default) 
+					}) } }/>
+				{/*关于初恋 */}
+				<Route path="/marriage_app/about_truelove" getComponent={ (nextState, callback) =>{ 
+					require.ensure( [ ], (require) => { 
+						callback(null, require("../marriage_component/setting/about_truelove").default) 
 					}) } }/>
 			</Route>
 		</Router>

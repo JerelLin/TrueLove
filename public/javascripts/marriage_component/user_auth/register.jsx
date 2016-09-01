@@ -35,8 +35,8 @@ class Register extends React.Component{
 		};
 
 		// 数据检测
-		let checked_empty_result = checked_empty([ phoneNumber, password ]);
-		let checked_format_result = checked_format([ phoneNumber, password ]);
+		let checked_empty_result = checked_empty([ phoneNumber, password, confirm_password ]);
+		let checked_format_result = checked_format([ phoneNumber, password, confirm_password ]);
 		let checked_password_result = checked_password(password, confirm_password);
 
 		if(checked_empty_result == false || checked_format_result == false || checked_password_result == false){

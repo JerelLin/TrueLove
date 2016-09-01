@@ -45,9 +45,9 @@ class Login extends React.Component{
 				};
 				// 登录成功
 				notification["success"]({
-	      			message: "成功",
-	      			description: result.body.message
-	    		});
+		      			message: "成功",
+		      			description: result.body.message
+		    		});
 				localStorage.marriage_app_token = result.body.token;
 				localStorage.marriage_app_auth_rank = result.body.auth;
 				localStorage.marriage_app_login_state = true;
@@ -56,7 +56,6 @@ class Login extends React.Component{
 				auth_rank_redirect(null, null, true, result.body.auth);
 			})
 			.catch((error) => { console.log(error) });
-
 	}
 
 	render(){
@@ -82,8 +81,8 @@ class Login extends React.Component{
 				    </div>
 				</div>
 			</div>
-		);
-	};
-};
+		)
+	}
+}
 
-export default Login;
+export default Login

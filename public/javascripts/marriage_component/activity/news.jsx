@@ -104,14 +104,14 @@ class News extends React.Component{
 				<Modal wrapClassName="news_preview_box"
 					width = "680"
 					title = "消息查看"
-		          	visible = { this.state.preview_visible }
-		          	onOk = { () => this.preview_close() }
-		          	onCancel = { () => this.preview_close() }
-		        >
-		        	<Spin spinning={ this.state.news_detail_loading } >
-		        		<iframe srcDoc={ this.state.news_detail } frameBorder="0" width="100%" height="350px">{ this.state.news_detail }</iframe>
-		        	</Spin>
-		        </Modal>
+				          	visible = { this.state.preview_visible }
+				          	onOk = { (  ) => this.preview_close() }
+				          	onCancel = { (  ) => this.preview_close() }
+				        >
+				        	<Spin spinning={ this.state.news_detail_loading } >
+				        		<iframe srcDoc={ this.state.news_detail } frameBorder="0" width="100%" height="350px">{ this.state.news_detail }</iframe>
+				        	</Spin>
+		        		</Modal>
 			</div>
 		);
 	}

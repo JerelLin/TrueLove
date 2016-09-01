@@ -6,7 +6,7 @@ class Sign_up extends React.Component{
 		super( props )
 	}
 
-	render(){
+	render(  ){
 		return(
 			<div className="sign_up">报名</div>
 		)

@@ -2,21 +2,19 @@
 	position: relative;
 	text-decoration: none;
 	text-align: center;
-	line-height: 35px;
+	line-height: 25px;
 	display: inline-block;
-	width: 130px;
-	height: 35px;
+	width: 100px;
+	height: 25px;
 	background-color: #FFF;
-	color: #434343;
-	border: 1px solid #ededed;
-	font-size: 14px;
-	/*-webkit-transition: all .5s;
-	transition: all .5s;*/
+	border: 1px solid #d9d9d9 ;
+	color: #666;
+	font-size: 12px;
+	border-radius: 5px;
 }
 .file:hover{
-	border: 1px solid #ee1e6c;
-	background-color: #ee1e6c;
-	color: #FFF;
+	border: 1px solid #2db7f5 ;
+	color: #2db7f5;
 }
 .file input{
 	position: absolute;

@@ -1,92 +1,12 @@
-.activity_userProperty{
-	width:954px;
-	margin-left:-50px;
+.activity_user_property .title{
+	padding :  15px 0;
 }
-
-/*布局*/
-.activity_userProperty .userProperty_section{
-	width:100%;
-	min-height:555px;
+.activity_user_property .typeSelect{
+	padding :  10px 0;
 }
-.activity_userProperty .userProperty_section .title{
-	width:100%;
-	height:48px;
-	background-color:#FFF;
-	color:#434343;
-	line-height:48px;
-	font-size:16px;
-	padding-left:20px;
-	border-bottom:1px solid #ee1e6c;
+.activity_user_property .activitySelect{
+	padding :  10px 0;
 }
-/*功能选择*/
-.activity_userProperty .typeSelect{
-	width:99.9%;
-	height:70px;
-	background-color:#FFF;
+.activity_user_property label{
+	padding-right:  20px;
 }
-/*功能选择-end*/
-
-/* 日期下拉样式补充*/
-.activity_userProperty .option{
-	width:100%;
-	height:80px;
-	/*border:1px solid #b6b6b6;*/
-}
-.activity_userProperty .option label{
-	color:#434343;
-	font-size:15px;
-	margin-left: 20px;
-	margin-right:25px;
-	margin-top:20px;
-}
-.activity_userProperty .option .select{
-	display:inline-block;
-	margin-top:20px;
-}
-/* 日期下拉样式补充-end*/
-
-/*标注*/
-.activity_userProperty .userProperty_section .note{
-	width:100%;
-	height:80px;
-	/*border:1px solid #666;*/
-	position:relative;
-}
-.activity_userProperty .man{
-	margin-top:5px;
-	width:100px;
-	height:30px;
-	font-size:14px;
-	border:1px solid #1F77B4;
-	position:absolute;
-	right:10px;
-	top:5px;
-	color:#1F77B4;
-	text-align:center;
-	line-height:30px;
-}
-.activity_userProperty .woman{
-	width:100px;
-	height:30px;
-	font-size:14px;
-	border:1px solid #AEC7EB;
-	position:absolute;
-	right:10px;
-	top:50px;
-	color:#AEC7EB;
-	text-align:center;
-	line-height:30px;
-}
-/*标注-end*/
-
-/*性别*/
-.sex{}
-
-/*年龄*/
-.age{}
-
-/*学历*/
-.education{}
-
-/*薪水*/
-.salary{}

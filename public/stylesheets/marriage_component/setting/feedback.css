@@ -1,44 +1,13 @@
-*{
-	margin: 0;
-	padding: 0;
+.feedback_section{
+	padding: 20px 35px;
 }
-
-.feedback_header{
-	width: 100%;
-	height: 65px;
-	line-height: 65px;
-	border-bottom: 1px solid #ededed;
+.feedback_section p{
+	margin-top: 10px;
 }
-.feedback_header span{
-	margin-left: 35px;
-	font-size: 22px;
-	color: #333;
+.feedback_section .ant-input{
+	width: 500px;
+	height: 250px;
 }
-.feedback_main{
-	width: 852px;
-	min-height: 500px;
-	margin: 0 auto;
-	/*border: 1px solid #a6d7b1;*/
-}
-.feedback_main .words{
-	color:#707171;
-	font-size:15px;
-	line-height:20px;
-	margin-top: 30px;
-}
-.feedback_main .textarea_component{
-	width:792px;
-	margin-top:20px;
-}
-
-/*按钮区域*/
-.button_zone{
-	margin-top:20px;
-	overflow:hidden;
-	/*border: 1px solid #a6d7b1;*/
-}
-.button_zone .button_zone_mian{
-	width: 300px;
-	height: 50px;
-	float: right;
+.feedback_section .ant-btn{
+	margin-right: 10px;
 }

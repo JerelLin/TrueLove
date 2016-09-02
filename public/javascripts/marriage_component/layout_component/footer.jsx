@@ -2,7 +2,7 @@ import React from "react";
 import "../../../stylesheets/marriage_component/layout_component/footer.css";
 
 class Footer extends React.Component{
-	render(){
+	render(  ){
 		return(
 			<div className="footer">
 				<div className="footer_main">

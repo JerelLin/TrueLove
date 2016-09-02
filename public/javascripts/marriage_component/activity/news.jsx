@@ -65,7 +65,7 @@ class News extends React.Component{
 			      	message: "消息",
 			      	description: result.body.message
 			    });
-			    let news_list_data = [];
+			    let news_list_data = [  ];
 				result.body.news_list_data.map((ele, key) => {
 					news_list_data.push({
 						key: key,

@@ -38,15 +38,15 @@ class Reset_password extends React.Component{
 				_this.setState({ code_loading : false });
 				if(result.body.error){
 					notification["error"]({
-	      				message: "错误",
-	      				description: result.body.message
-	    			});
-	    			return;
-				};
+		      				message: "错误",
+		      				description: result.body.message
+		    			});
+	    				return;
+				}
 				notification["success"]({
-	      			message: "成功",
-	      			description: result.body.message
-	    		});
+		      			message: "成功",
+		      			description: result.body.message
+		    		})
 			})
 			.catch((error) => { console.log(error) });
 	}
